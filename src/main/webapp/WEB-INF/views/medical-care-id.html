@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Ubuntu+Condensed');
+        .menu-main {
+            list-style: none;
+            margin: 40px 0 5px;
+            padding: 25px 0 5px;
+            text-align: center;
+            background: white;
+        }
+        .menu-main li {display: inline-block;}
+        .menu-main li:after {
+            content: "|";
+            color: #606060;
+            display: inline-block;
+            vertical-align:top;
+        }
+        .menu-main li:last-child:after {content: none;}
+        .menu-main a {
+            text-decoration: none;
+            font-family: 'Ubuntu Condensed', sans-serif;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 20px;
+            margin: 0 34px 0 30px;
+            font-size: 17px;
+            text-transform: uppercase;
+            display: inline-block;
+            transition: color .2s;
+        }
+        .menu-main a, .menu-main a:visited {color: #9d999d;}
+        .menu-main a.current, .menu-main a:hover{color: #feb386;}
+        .menu-main a:before,
+        .menu-main a:after {
+            content: "";
+            position: absolute;
+            height: 4px;
+            top: auto;
+            right: 50%;
+            bottom: -5px;
+            left: 50%;
+            background: #feb386;
+            transition: .8s;
+        }
+        .menu-main a:hover:before, .menu-main .current:before {left: 0;}
+        .menu-main a:hover:after, .menu-main .current:after {right: 0;}
+        @media (max-width: 550px) {
+            .menu-main {padding-top: 0;}
+            .menu-main li {display: block;}
+            .menu-main li:after {content: none;}
+            .menu-main a {
+                padding: 25px 0 20px;
+                margin: 0 30px;
+            }
+        }
+        h1 {
+            text-decoration: none;
+            font-family: 'Ubuntu Condensed', sans-serif;
+            letter-spacing: 2px;
+            position: static;
+            font-size: 17px;
+            text-transform: uppercase;
+        }
+        h2 {
+            display: inline-block;
+            text-decoration: none;
+            font-family: 'Ubuntu Condensed', sans-serif;
+            letter-spacing: 1px;
+            font-size: 17px;
+            width: 700px;
+            overflow: scroll;
+            padding-left: 500px;
+            color: #feb386;
+            white-space: pre-line;
+            text-align: left;
+        }
+        div {
+            text-decoration: none;
+            font-family: 'Ubuntu Condensed', sans-serif;
+            /*letter-spacing: 1px;*/
+            font-size: 15px;
+            overflow: scroll;
+            color: #606060;
+            text-align: left;
+        }
+        .secondsidenav {
+            height: 100%; /* Full-height: remove this if you want "auto" height */
+            width: 160px; /* Set the width of the sidebar */
+            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+            z-index: 1; /* Stay on top */
+            top: 120px;
+            left: 330px;
+            overflow-x: hidden; /* Disable horizontal scroll */
+            padding-top: 20px;
+        }
+        .secondsidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 17px;
+            color: #818181;
+            display: block;
+        }
+        .secondsidenav a:hover {
+            color: #606060;
+        }
+        .sidenav {
+            height: 100%; /* Full-height: remove this if you want "auto" height */
+            width: 160px; /* Set the width of the sidebar */
+            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+            z-index: 1; /* Stay on top */
+            top: 120px;
+            left: 270px;
+            overflow-x: hidden; /* Disable horizontal scroll */
+            padding-top: 20px;
+        }
+
+        /* The navigation menu links */
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 17px;
+            color: #818181;
+            display: block;
+        }
+
+        /* When you mouse over the navigation links, change their color */
+        .sidenav a:hover {
+            color: #606060;
+        }
+
+        h2 a {
+            white-space: normal;
+            /*font-size: 10px;*/
+        }
+
+        /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+        @media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+            .secondsidenav {padding-top: 15px;}
+            .secondsidenav a {font-size: 18px;}
+        }
+    </style>
+</head>
+<body>
+<ul class="menu-main">
+    <li><a href="">Главная</a></li>
+    <li><a href="/medical-cares" class="current">Услуги</a></li>
+    <li><a href="/prices">Цены</a></li>
+    <li><a href="/doctors">Врачи</a></li>
+    <li><a href="/about">О компании</a></li>
+    <li><a href="/login">Для сотрудников</a></li>
+</ul>
+
+
+<div class="sidenav">
+    <div th:each="mc : ${typeOfMedicalCares}">
+        <a th:href="@{/medical-care/type/{typeOfMedicalCare}(typeOfMedicalCare = ${mc.id})}" th:text="${mc.label}"/>
+    </div>
+    <div class="secondsidenav">
+        <div th:each="mc : ${medicalCares}">
+            <a th:href="@{/medical-care/{id}(id = ${mc.id})}" th:text="${mc.label}"/>
+        </div>
+    </div>
+</div>
+
+
+<h2>
+    <a th:each="info : ${medicalCare.textEntities}">
+        <a th:text="${info.mainTag}"/>
+        <div tr th:text="${info.basicText}"/>
+    </a>
+</h2>
+
+</body>
+</html>
+
+

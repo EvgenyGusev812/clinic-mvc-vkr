@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Ubuntu+Condensed');
+        .menu-main {
+            list-style: none;
+            margin: 40px 0 5px;
+            padding: 25px 0 5px;
+            text-align: center;
+            background: white;
+        }
+        .menu-main li {display: inline-block;}
+        .menu-main li:after {
+            content: "|";
+            color: #606060;
+            display: inline-block;
+            vertical-align:top;
+        }
+        .menu-main li:last-child:after {content: none;}
+        .menu-main a {
+            text-decoration: none;
+            font-family: 'Ubuntu Condensed', sans-serif;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 20px;
+            margin: 0 34px 0 30px;
+            font-size: 17px;
+            text-transform: uppercase;
+            display: inline-block;
+            transition: color .2s;
+        }
+        .menu-main a, .menu-main a:visited {color: #9d999d;}
+        .menu-main a.current, .menu-main a:hover{color: #feb386;}
+        .menu-main a:before,
+        .menu-main a:after {
+            content: "";
+            position: absolute;
+            height: 4px;
+            top: auto;
+            right: 50%;
+            bottom: -5px;
+            left: 50%;
+            background: #feb386;
+            transition: .8s;
+        }
+        .menu-main a:hover:before, .menu-main .current:before {left: 0;}
+        .menu-main a:hover:after, .menu-main .current:after {right: 0;}
+        @media (max-width: 550px) {
+            .menu-main {padding-top: 0;}
+            .menu-main li {display: block;}
+            .menu-main li:after {content: none;}
+            .menu-main a {
+                padding: 25px 0 20px;
+                margin: 0 30px;
+            }
+        }
+        h1 {
+            text-decoration: none;
+            font-family: 'Ubuntu Condensed', sans-serif;
+            letter-spacing: 2px;
+            position: static;
+            font-size: 17px;
+            text-transform: uppercase;
+        }
+        h2 {
+            text-decoration: none;
+            font-family: 'Ubuntu Condensed', sans-serif;
+            letter-spacing: 1px;
+            font-size: 17px;
+            /*width: 700px;*/
+            overflow: scroll;
+            /*padding-left: 385px;*/
+            color: #feb386;
+            text-align: left;
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%)
+        }
+        div {
+            text-decoration: none;
+            font-family: 'Ubuntu Condensed', sans-serif;
+            /*letter-spacing: 1px;*/
+            font-size: 20px;
+            overflow: scroll;
+            color: #606060;
+            text-align: left;
+            position: center;
+        }
+        table {
+            /*border-spacing: 0 10px;*/
+            font-family: 'Ubuntu Condensed', sans-serif;
+            font-weight: bold;
+            text-align: center;
+            margin: auto;
+            width: 45%;
+        }
+        th {
+            padding: 10px 20px;
+            background: #feb386;
+            color: #606060;
+            border-right: 2px solid;
+            font-size: 0.9em;
+        }
+        th:last-child {
+            border-right: none;
+        }
+        td {
+            vertical-align: middle;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            color: #606060;
+            /*border-top: 2px solid #56433D;*/
+            /*border-bottom: 2px solid #56433D;*/
+            /*border-right: 2px solid #56433D;*/
+        }
+        td:first-child {
+            /*border-left: 2px solid #56433D;*/
+            /*border-right: none;*/
+        }
+        td:nth-child(2){
+            text-align: left;
+        }
+        .search {
+            width: 100%;
+            position: relative;
+            display: flex;
+            font-family: 'Ubuntu Condensed', sans-serif;
+        }
+
+        .searchTerm {
+            font-family: 'Ubuntu Condensed', sans-serif;
+            width: 100%;
+            border: 3px solid #feb386;
+            border-right: none;
+            padding: 5px;
+            height: 20px;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            color: #606060;
+        }
+
+        .searchTerm:focus{
+            font-family: 'Ubuntu Condensed', sans-serif;
+            color: #606060;
+        }
+
+        .searchButton {
+            font-family: 'Ubuntu Condensed', sans-serif;
+            width: 40px;
+            height: 36px;
+            border: 1px solid #feb386;
+            background: #feb386;
+            text-align: center;
+            color: #fff;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /*Resize the wrap to see the search bar change!*/
+        .wrap{
+            position: relative;
+            width: 20%;
+            /*top: 50%;*/
+            left: 52%;
+            white-space: pre-line;
+            /*transform: translate(-50%, -50%);*/
+        }
+        form {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+<ul class="menu-main">
+    <li><a href="">Главная</a></li>
+    <li><a href="/medical-cares">Услуги</a></li>
+    <li><a  class="current" href="/prices">Цены</a></li>
+    <li><a href="/doctors">Врачи</a></li>
+    <li><a href="/about">О компании</a></li>
+    <li><a href="/login">Для сотрудников</a></li>
+</ul>
+<h1>
+</h1>
+<div class="wrap">
+    <div class="search">
+        <form th:action="@{/prices}" method="get">
+            <input type="text" class="searchTerm" name="keyword" th:value="${keyword}" placeholder="Поиск..."><button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+</div>
+    <div th:each="price : ${prices}">
+    <table>
+        <thead>
+            <th colspan="2" th:text="${price.key.label}"/>
+        </thead>
+        <tbody>
+        <tr th:each="value : ${price.value}">
+            <td th:text="${value.medicalCare.label}"/>
+            <td th:text="${value.amount} + 'руб.'"/>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</body>
+</html>
+
+
+
