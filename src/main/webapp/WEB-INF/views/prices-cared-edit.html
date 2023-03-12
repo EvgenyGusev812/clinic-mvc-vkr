@@ -64,65 +64,33 @@
             text-transform: uppercase;
         }
         h2 {
+            display: inline-block;
             text-decoration: none;
             font-family: 'Ubuntu Condensed', sans-serif;
             letter-spacing: 1px;
             font-size: 17px;
-            /*width: 700px;*/
+            width: 700px;
             overflow: scroll;
-            /*padding-left: 385px;*/
+            padding-left: 390px;
             color: #feb386;
+            white-space: pre-line;
             text-align: left;
-            position: absolute;
-            top: 25%;
-            left: 50%;
-            margin-right: -50%;
-            transform: translate(-50%, -50%)
         }
         div {
             text-decoration: none;
             font-family: 'Ubuntu Condensed', sans-serif;
             /*letter-spacing: 1px;*/
-            font-size: 20px;
+            font-size: 15px;
             overflow: scroll;
             color: #606060;
+            white-space: pre-line;
             text-align: left;
-            position: center;
         }
-        table {
-            /*border-spacing: 0 10px;*/
-            font-family: 'Ubuntu Condensed', sans-serif;
-            font-weight: bold;
-            text-align: center;
-            margin: auto;
-            width: 45%;
-        }
-        th {
-            padding: 10px 20px;
-            background: #feb386;
-            color: #606060;
-            border-right: 2px solid;
-            font-size: 0.9em;
-        }
-        th:last-child {
-            border-right: none;
-        }
-        td {
-            vertical-align: middle;
-            padding: 10px;
-            font-size: 18px;
-            text-align: center;
-            color: #606060;
-            /*border-top: 2px solid #56433D;*/
-            /*border-bottom: 2px solid #56433D;*/
-            /*border-right: 2px solid #56433D;*/
-        }
-        td:first-child {
-            /*border-left: 2px solid #56433D;*/
-            /*border-right: none;*/
-        }
-        td:nth-child(2){
-            text-align: left;
+        img {
+            width: 250px;
+            height: 250px;
+            float: left;
+            margin: 0 15px 0 0;
         }
         .search {
             width: 100%;
@@ -159,7 +127,6 @@
             border-radius: 0 5px 5px 0;
             cursor: pointer;
             font-size: 20px;
-            position: absolute;
         }
 
         /*Resize the wrap to see the search bar change!*/
@@ -178,37 +145,31 @@
 </head>
 <body>
 <ul class="menu-main">
-    <li><a href="">Главная</a></li>
-    <li><a href="/medical-cares">Услуги</a></li>
-    <li><a  class="current" href="/prices">Цены</a></li>
-    <li><a href="/doctors">Врачи</a></li>
-    <li><a href="/about">О компании</a></li>
-    <li><a href="/login">Для сотрудников</a></li>
+    <li><a href="/doctor/edit">Врачи</a></li>
+    <!--    <li><a href="/prices">Услуги</a></li>-->
+    <li><a href="/prices/edit" class="current">Услуги и цены</a></li>
+    <!--    <li><a href="/about">О компании</a></li>-->
 </ul>
-<h1>
-</h1>
+
 <div class="wrap">
     <div class="search">
-        <form th:action="@{/prices/}" method="get">
+        <form th:action="@{/prices/edit-all}" method="get">
             <input type="text" class="searchTerm" name="keyword" th:value="${keyword}" placeholder="Поиск..."><button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
         </form>
     </div>
 </div>
+<h2>
     <div th:each="price : ${prices}">
-    <table>
-        <thead>
             <th colspan="2" th:text="${price.key.label}"/>
-        </thead>
-        <tbody>
         <tr th:each="value : ${price.value}">
-            <td th:text="${value.medicalCare.label}"/>
-            <td th:text="${value.amount} + 'руб.'"/>
+            <a th:href="@{/medical-care/edit/{id}(id = ${value.medicalCare.id})}"
+               th:text="${value.medicalCare.label}"/>
         </tr>
-        </tbody>
-    </table>
     </div>
+</h2>
 </body>
 </html>
+
 
 
 

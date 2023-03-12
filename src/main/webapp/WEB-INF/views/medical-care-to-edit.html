@@ -73,8 +73,9 @@
             overflow: scroll;
             padding-left: 390px;
             color: #feb386;
-            white-space: pre-line;
             text-align: left;
+            white-space: nowrap;
+
         }
         div {
             text-decoration: none;
@@ -83,36 +84,60 @@
             font-size: 15px;
             overflow: scroll;
             color: #606060;
-            white-space: pre-line;
             text-align: left;
+            white-space: pre-line;
         }
-        img {
-            width: 250px;
-            height: 250px;
-            float: left;
-            margin: 0 15px 0 0;
+        input {
+            background: white;
+            letter-spacing: 1px;
+            font-family: 'Ubuntu Condensed', sans-serif;
+            background-position: 10px 10px;
+            border: 2px solid #feb386;
+            border-radius: 5px;
+            font-size: 17px;
         }
     </style>
 </head>
 <body>
 <ul class="menu-main">
     <li><a href="/doctor/edit">Врачи</a></li>
-<!--    <li><a href="/prices">Услуги</a></li>-->
-    <li><a href="/prices/edit">Услуги и цены</a></li>
-<!--    <li><a href="/about">О компании</a></li>-->
+    <!--    <li><a href="/prices">Услуги</a></li>-->
+    <li><a href="/prices/edit" class="current">Услуги и цены</a></li>
+    <!--    <li><a href="/about">О компании</a></li>-->
 </ul>
 
 <h2>
-    <div th:each="doctor : ${doctors}">
-        <img th:src="@{'/photo/show/' + ${doctor.photo}}" alt="Man"/>
-        <tr th:text="${doctor.bio.name} + ' ' + ${doctor.bio.middlename} + ' ' + ${doctor.bio.surname}"/>
-
-        Cпециализация:  <tr  th:each="spes : ${doctor.specialization}">
-        <td th:text="${spes.translate}">
-    </tr>
-        Стаж работы с: <tr th:text="${doctor.info}"/> года
-        Образование: <tr th:text="${doctor.education}"/>
-
+    <div>
+        <form th:method="POST" th:action="@{/medical-care/edit/save-medical-care}" th:object="${medicalCare}">
+            <input type="submit" value="Обновить"/>
+            Наименование:
+            <input type="text" th:field="${medicalCare.label}" id="label"/>
+            Стоимость:
+            <input type="text" th:field="${medicalCare.price.amount}" id="amount"/>
+            <input type="hidden" th:field="${medicalCare.price}"/>
+            <input type="hidden" th:field="${medicalCare.id}"/>
+            <input type="hidden" th:field="${medicalCare.typeOfMedicalCare}"/>
+            <input type="hidden" th:field="${medicalCare.doctors}"/>
+            Описание:
+            <div th:each="textEnt : ${textEntities}">
+                Заголовок:
+                <input type="text" th:value="${textEnt.mainTag}"/>
+                Основной текст:
+                <input type="text" th:value="${textEnt.basicText}" id="basicText"/>
+                <input type="hidden" th:value="${textEnt.medicalCare}" id="medicalCare"/>
+                <input type="hidden" th:value="${textEnt.info}" id="info"/>
+                <input type="hidden" th:value="${textEnt.id}" id="id"/>
+            </div>
+        </form>
+        <form th:method="POST" th:action="@{/medical-care/edit/delete-medical-care}" th:object="${medicalCare}">
+            <input type="submit" value="Удалить"/>
+            <input type="hidden" th:field="${medicalCare.label}"/>
+            <input type="hidden" th:field="${medicalCare.price}"/>
+            <input type="hidden" th:field="${medicalCare.id}"/>
+            <input type="hidden" th:field="${medicalCare.typeOfMedicalCare}"/>
+            <input type="hidden" th:field="${medicalCare.doctors}"/>
+            <input type="hidden" th:field="${medicalCare.textEntities}"/>
+        </form>
     </div>
 </h2>
 </body>

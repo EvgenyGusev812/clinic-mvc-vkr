@@ -96,22 +96,17 @@
 </head>
 <body>
 <ul class="menu-main">
-    <li><a href="/doctor/edit">Врачи</a></li>
-<!--    <li><a href="/prices">Услуги</a></li>-->
-    <li><a href="/prices/edit">Услуги и цены</a></li>
-<!--    <li><a href="/about">О компании</a></li>-->
+    <li><a href="/appointments/">Прошедшие записи</a></li>
+    <li><a href="/appointments/current" class="current">Текущие записи</a></li>
+    <li><a href="/appointments/">Будущие записи</a></li>
+
 </ul>
 
 <h2>
-    <div th:each="doctor : ${doctors}">
-        <img th:src="@{'/photo/show/' + ${doctor.photo}}" alt="Man"/>
-        <tr th:text="${doctor.bio.name} + ' ' + ${doctor.bio.middlename} + ' ' + ${doctor.bio.surname}"/>
-
-        Cпециализация:  <tr  th:each="spes : ${doctor.specialization}">
-        <td th:text="${spes.translate}">
-    </tr>
-        Стаж работы с: <tr th:text="${doctor.info}"/> года
-        Образование: <tr th:text="${doctor.education}"/>
+    <div th:each="order : ${appointments}">
+        <a th:href="@{/appointment/patient/edit/{id}(id = ${order.patient.id})}"
+           th:text="${order.patient.bio.name} + ' ' + ${order.patient.bio.middlename} + ' ' + ${order.patient.bio.surname}"/>
+        <a th:text="${order.date}"/>
 
     </div>
 </h2>

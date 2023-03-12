@@ -27,4 +27,11 @@ public class Appointment extends BaseEntity {
     @JoinColumn(name = "medical_care_id", referencedColumnName = "id")
     private MedicalCare medicalCare;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
+    private Doctor doctor;
+
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
+    private String description;
+
 }

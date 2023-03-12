@@ -64,30 +64,33 @@
             text-transform: uppercase;
         }
         h2 {
+            display: inline-block;
             text-decoration: none;
             font-family: 'Ubuntu Condensed', sans-serif;
             letter-spacing: 1px;
             font-size: 17px;
-            /*width: 700px;*/
+            width: 700px;
             overflow: scroll;
-            /*padding-left: 385px;*/
+            padding-left: 390px;
             color: #feb386;
+            white-space: pre-line;
             text-align: left;
-            position: absolute;
-            top: 25%;
-            left: 50%;
-            margin-right: -50%;
-            transform: translate(-50%, -50%)
         }
         div {
             text-decoration: none;
             font-family: 'Ubuntu Condensed', sans-serif;
             /*letter-spacing: 1px;*/
-            font-size: 20px;
+            font-size: 15px;
             overflow: scroll;
             color: #606060;
+            white-space: pre-line;
             text-align: left;
-            position: center;
+        }
+        img {
+            width: 250px;
+            height: 250px;
+            float: left;
+            margin: 0 15px 0 0;
         }
         table {
             /*border-spacing: 0 10px;*/
@@ -178,37 +181,44 @@
 </head>
 <body>
 <ul class="menu-main">
-    <li><a href="">Главная</a></li>
-    <li><a href="/medical-cares">Услуги</a></li>
-    <li><a  class="current" href="/prices">Цены</a></li>
-    <li><a href="/doctors">Врачи</a></li>
-    <li><a href="/about">О компании</a></li>
-    <li><a href="/login">Для сотрудников</a></li>
+    <li><a href="/appointments/previous" class="current">Прошедшие записи</a></li>
+    <li><a href="/appointments/">Текущие записи</a></li>
+    <li><a href="/appointments/">Будущие записи</a></li>
+
 </ul>
 <h1>
 </h1>
 <div class="wrap">
     <div class="search">
-        <form th:action="@{/prices/}" method="get">
+        <form th:action="@{/appointments/find-by-keyword/}" method="get">
             <input type="text" class="searchTerm" name="keyword" th:value="${keyword}" placeholder="Поиск..."><button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
         </form>
     </div>
 </div>
-    <div th:each="price : ${prices}">
+<div th:each="order : ${appointments}">
     <table>
         <thead>
-            <th colspan="2" th:text="${price.key.label}"/>
+        <tr>
+            <td>Клиент</td>
+            <td>Дата</td>
+            <td>Услуга</td>
+            <td>Назначение</td>
+        </tr>
         </thead>
         <tbody>
-        <tr th:each="value : ${price.value}">
-            <td th:text="${value.medicalCare.label}"/>
-            <td th:text="${value.amount} + 'руб.'"/>
-        </tr>
+            <td th:text="${order.patient.bio.name + ' ' + order.patient.bio.surname + ' ' + order.patient.bio.middlename}"/>
+            <td th:text="${order.date}"/>
+            <td th:text="${order.medicalCare.label}"/>
+            <td th:text="${order.description}"/>
         </tbody>
     </table>
-    </div>
+</div>
+</body>
+<h2>
+</h2>
 </body>
 </html>
+
 
 
 

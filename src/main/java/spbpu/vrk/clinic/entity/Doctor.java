@@ -25,6 +25,9 @@ public class Doctor extends BaseEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @OneToMany(mappedBy = "doctor")
+    private List<Appointment> appointments;
+
     @ManyToMany(mappedBy = "doctors")
     private Set<Specialization> specialization;
 

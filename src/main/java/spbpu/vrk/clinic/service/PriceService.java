@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class PriceService {
 
+    @Autowired
     private PriceRepository priceRepository;
 
     public Map<TypeOfMedicalCare, List<Price>> findAllPricesWithTypeByKeyWord(String keyWord) {
@@ -37,5 +38,9 @@ public class PriceService {
             }
         }
         return resultMap;
+    }
+
+    public List<Price> getAllPricesList() {
+        return priceRepository.findAll();
     }
 }
